@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Safqah.Infrastructure;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
 
@@ -55,6 +54,8 @@ namespace Safqah.Auth
                 };
             });
 
+            services.AddAuthorization();
+
 
             services.AddSwaggerGen(c =>
             {
@@ -98,13 +99,14 @@ namespace Safqah.Auth
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wallet API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API V1");
             });
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

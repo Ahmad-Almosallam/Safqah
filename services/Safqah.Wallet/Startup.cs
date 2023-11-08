@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Safqah.Infrastructure;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
 
@@ -105,6 +104,7 @@ namespace Safqah.Wallet
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
