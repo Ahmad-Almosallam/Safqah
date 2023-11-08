@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Safqah.Payment.Data;
+using Safqah.Shared.BaseRepository;
 using System;
 using System.Text;
 
@@ -26,7 +28,12 @@ namespace Safqah.Payment
         {
             services.AddControllers();
 
-            
+            services.AddDbContext<PaymentDbContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("Default"));
+            });
+
+            services.AddScoped(typeof(IRepository<,,>), typeof(Repository<,,>));
 
             services.AddAuthentication(options =>
             {

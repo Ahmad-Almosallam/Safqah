@@ -22,6 +22,13 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.32" />
 		<PackageReference Include="Microsoft.OpenApi" Version="1.6.10" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.32" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.18" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Safqah.Shared\Safqah.Shared.csproj" />
 	</ItemGroup>
 	
 
