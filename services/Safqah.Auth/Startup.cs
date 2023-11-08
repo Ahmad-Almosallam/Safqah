@@ -2,11 +2,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Safqah.Auth.Data;
 using System;
 using System.Text;
 
@@ -26,7 +30,15 @@ namespace Safqah.Auth
         {
             services.AddControllers();
 
-            
+            services.AddDbContext<AuthDbContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("Default"));
+            });
+
+            services.AddIdentityCore<IdentityUser>()
+                    .AddUserManager<UserManager<IdentityUser>>()
+                    .AddDefaultTokenProviders()
+                    .AddEntityFrameworkStores<AuthDbContext>();
 
             services.AddAuthentication(options =>
             {
@@ -50,9 +62,32 @@ namespace Safqah.Auth
 
             services.AddAuthorization();
 
+            services.AddApiVersioning(options => {
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+            });
+
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
+
 
             services.AddSwaggerGen(c =>
             {
+                
+                var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    c.SwaggerDoc(description.GroupName, new OpenApiInfo()
+                    {
+                        Title = $"My API {description.ApiVersion}",
+                        Version = description.ApiVersion.ToString()
+                    });
+                }
+
                 var jwtSecurityScheme = new OpenApiSecurityScheme
                 {
                     Scheme = "bearer",
@@ -75,10 +110,6 @@ namespace Safqah.Auth
             {
                 { jwtSecurityScheme, Array.Empty<string>() }
             });
-                c.SwaggerDoc("v1", new OpenApiInfo()
-                {
-                    Version = "v1",
-                });
             });
         }
 
@@ -93,7 +124,11 @@ namespace Safqah.Auth
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API V1");
+                var provider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    c.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                }
             });
             app.UseStaticFiles();
             app.UseHttpsRedirection();
