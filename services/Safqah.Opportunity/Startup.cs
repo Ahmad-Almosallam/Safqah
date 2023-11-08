@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Safqah.Infrastructure;
 using System;
 using System.Text;
 
@@ -26,13 +25,6 @@ namespace Safqah.Opportunity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            services.RegisterInfrastructure(Configuration);
-
-            services.AddIdentityCore<IdentityUser>()
-                    .AddUserManager<UserManager<IdentityUser>>()
-                    .AddDefaultTokenProviders()
-                    .AddEntityFrameworkStores<SafqahDbContext>();
 
             services.AddAuthentication(options =>
             {

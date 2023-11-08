@@ -2,16 +2,19 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Safqah.Infrastructure;
+using Safqah.Investors.Data;
+using Safqah.Investors.Entities;
 using System;
 using System.Text;
+using InvestorDbContext = Safqah.Investors.Data.InvestorDbContext;
 
-namespace Safqah.Investor
+namespace Safqah.Investors
 {
     public class Startup
     {
@@ -27,12 +30,15 @@ namespace Safqah.Investor
         {
             services.AddControllers();
 
-            services.RegisterInfrastructure(Configuration);
+            services.AddDbContext<InvestorDbContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("Default"));
+            });
 
-            services.AddIdentityCore<IdentityUser>()
-                    .AddUserManager<UserManager<IdentityUser>>()
+            services.AddIdentityCore<Investor>()
+                    .AddUserManager<UserManager<Investor>>()
                     .AddDefaultTokenProviders()
-                    .AddEntityFrameworkStores<SafqahDbContext>();
+                    .AddEntityFrameworkStores<InvestorDbContext>();
 
             services.AddAuthentication(options =>
             {
