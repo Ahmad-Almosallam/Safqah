@@ -8,6 +8,7 @@ namespace Safqah.Shared.BaseClases
     [ApiController]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class BaseController : ControllerBase
     {
         protected string _userId

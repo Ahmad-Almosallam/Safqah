@@ -12,8 +12,6 @@ using System.Threading.Tasks;
 namespace Safqah.Payment.Controllers
 {
     [Authorize]
-    [ApiController]
-    [Route("api/[controller]")]
     public class PaymentController : BaseController
     {
         private readonly IRepository<PaymentTransaction, Guid, PaymentDbContext> _paymentTransactionRepository;
