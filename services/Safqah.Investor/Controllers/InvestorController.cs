@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Safqah.Investors.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class InvestorController : ControllerBase
@@ -19,9 +19,9 @@ namespace Safqah.Investors.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<ActionResult> Register(RegisterModel registerModel)
+        public async Task<ActionResult<IdentityResult>> Register(RegisterModel registerModel)
         {
             var user = await _userManager.FindByNameAsync(registerModel.PhoneNumber);
             if (user == null && registerModel.OTP == "1234")
@@ -41,10 +41,29 @@ namespace Safqah.Investors.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult GetAll()
+        [HttpGet("{investorId}")]
+        public async Task<ActionResult<Investor>> Get(string investorId)
         {
-            return Ok();
+            var investor = await _userManager.FindByIdAsync(investorId);
+            return Ok(investor);
+        }
+
+        [HttpPut("{investorId}")]
+        public async Task<ActionResult<IdentityResult>> Update([FromBody] UpdateInvestorModel investorModel, [FromRoute] string investorId)
+        {
+            var investor = await _userManager.FindByIdAsync(investorId);
+            if(investor != null && investorModel.OTP == "1234")
+            {
+                investor.PhoneNumber = investorModel.PhoneNumber;
+                investor.UserName = investorModel.PhoneNumber;
+                var res = await _userManager.UpdateAsync(investor);
+
+                if (res.Succeeded)
+                    return Ok(res);
+
+                return BadRequest(res);
+            }
+            return BadRequest();
         }
     }
 }
