@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{E50AF122-A178-40B1-A783-A67DCD42F405}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{3915071A-DCA6-4831-BA83-AF5E10F47EDE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Safqah.Infrastructure", "shared\Safqah.Infrastructure\Safqah.Infrastructure.csproj", "{99137F4F-5707-4375-847D-EE89830040F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Safqah.Wallet", "Safqah.Wallet\Safqah.Wallet.csproj", "{0B77EF80-1CFF-4ECA-BDD3-7B0C37E2F2AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99137F4F-5707-4375-847D-EE89830040F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99137F4F-5707-4375-847D-EE89830040F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99137F4F-5707-4375-847D-EE89830040F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99137F4F-5707-4375-847D-EE89830040F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B77EF80-1CFF-4ECA-BDD3-7B0C37E2F2AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B77EF80-1CFF-4ECA-BDD3-7B0C37E2F2AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B77EF80-1CFF-4ECA-BDD3-7B0C37E2F2AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B77EF80-1CFF-4ECA-BDD3-7B0C37E2F2AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{99137F4F-5707-4375-847D-EE89830040F2} = {3915071A-DCA6-4831-BA83-AF5E10F47EDE}
+		{0B77EF80-1CFF-4ECA-BDD3-7B0C37E2F2AB} = {E50AF122-A178-40B1-A783-A67DCD42F405}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB4CE152-2E35-409B-9B67-23FBA43BDCD6}
+	EndGlobalSection
+EndGlobal
