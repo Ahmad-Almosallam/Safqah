@@ -65,5 +65,12 @@ namespace Safqah.Investors.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet("{investorId}/balance")]
+        public async Task<ActionResult<decimal>> GetBalance(string investorId)
+        {
+            var investor = await _userManager.FindByIdAsync(investorId);
+            return Ok(investor.Balance);
+        }
     }
 }

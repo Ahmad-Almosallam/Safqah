@@ -10,7 +10,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Safqah.Opportunities.Data;
+using Safqah.Opportunities.HttpClients;
 using Safqah.Shared.BaseRepository;
+using Safqah.Shared.Settings;
 using System;
 using System.Text;
 
@@ -29,6 +31,10 @@ namespace Safqah.Opportunities
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddHttpContextAccessor();
+            services.AddHttpClient<IInvestorClient, InvestorClient>();
+            services.Configure<HttpClientsSettings>(Configuration.GetSection("HttpClientsSettings"));
 
             services.AddDbContext<OpportunityDbContext>(options =>
             {

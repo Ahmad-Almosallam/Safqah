@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Safqah.Payment.Data;
 using Safqah.Payment.Entites;
@@ -6,6 +7,7 @@ using Safqah.Payment.Models;
 using Safqah.Shared.BaseClases;
 using Safqah.Shared.BaseRepository;
 using Safqah.Shared.Enums;
+using Safqah.Shared.MessagesContracts;
 using System;
 using System.Threading.Tasks;
 
@@ -15,10 +17,14 @@ namespace Safqah.Payment.Controllers
     public class PaymentController : BaseController
     {
         private readonly IRepository<PaymentTransaction, Guid, PaymentDbContext> _paymentTransactionRepository;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public PaymentController(IRepository<PaymentTransaction, Guid, PaymentDbContext> paymentTransactionRepository)
+        public PaymentController(
+            IRepository<PaymentTransaction, Guid, PaymentDbContext> paymentTransactionRepository,
+            IPublishEndpoint publishEndpoint)
         {
             _paymentTransactionRepository = paymentTransactionRepository;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpPost("ApplePay")]
@@ -41,6 +47,7 @@ namespace Safqah.Payment.Controllers
             if (paymentTransaction.PaymentStatus == PaymentStatus.Success)
             {
                 // TODO: Add to the queue to Pop up the wallet If success
+                await _publishEndpoint.Publish(new PaymentSucceed { Amount = paymentTransaction.Amount, UserId = _userId });
             }
 
             return Ok(paymentTransaction);
@@ -64,6 +71,7 @@ namespace Safqah.Payment.Controllers
             if (paymentTransaction.PaymentStatus == PaymentStatus.Success)
             {
                 // TODO: Add to the queue to Pop up the wallet If success
+                await _publishEndpoint.Publish(new PaymentSucceed { Amount = paymentTransaction.Amount, UserId = _userId });
             }
 
             return Ok(paymentTransaction);
@@ -81,6 +89,7 @@ namespace Safqah.Payment.Controllers
             if (paymentTransaction.PaymentStatus == PaymentStatus.Success)
             {
                 // TODO: Add to the queue to Pop up the wallet If success
+                await _publishEndpoint.Publish(new PaymentSucceed { Amount = paymentTransaction.Amount, UserId = _userId });
             }
 
             return Ok();

@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,11 @@ namespace Safqah.Payment
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq();
+            });
+
             services.AddControllers();
 
             services.AddDbContext<PaymentDbContext>(options =>
@@ -57,7 +63,8 @@ namespace Safqah.Payment
                 };
             });
 
-            services.AddApiVersioning(options => {
+            services.AddApiVersioning(options =>
+            {
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);

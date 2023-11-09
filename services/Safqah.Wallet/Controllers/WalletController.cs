@@ -26,11 +26,10 @@ namespace Safqah.Wallet.Controllers
         }
 
 
-        [HttpPost("invest")]
-        public async Task<ActionResult> Invest(InvestModel investModel)
+        [HttpPost("invest/{userId}/{amount}")]
+        public async Task<ActionResult> Invest(string userId, decimal amount)
         {
-            await _walletRepository.Invest(investModel.UserId, investModel.Amount);
-            // TODO: Add To queue of Opportunity to sum the InvestedAmount
+            await _walletRepository.Invest(userId, amount);
             return Ok();
         }
     }
