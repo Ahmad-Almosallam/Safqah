@@ -49,7 +49,7 @@ namespace Safqah.Opportunities.Controllers
         [HttpPost("{opportunityId}/invest")]
         public async Task<ActionResult> Invest(long opportunityId)
         {
-            // TODO: Add to the queue of Investment
+            // TODO: Add to the queue of Investment, opportunityId + userId
             return Ok();
         }
     }
