@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MassTransit;
+using MassTransit.RabbitMqTransport.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Safqah.Opportunities.Data;
 using Safqah.Opportunities.Entities;
@@ -6,6 +8,7 @@ using Safqah.Opportunities.HttpClients;
 using Safqah.Opportunities.Models;
 using Safqah.Shared.BaseClases;
 using Safqah.Shared.BaseRepository;
+using Safqah.Shared.MessagesContracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,13 +21,16 @@ namespace Safqah.Opportunities.Controllers
     {
         private readonly IRepository<Opportunity, long, OpportunityDbContext> _opportunityRepository;
         private readonly IInvestorClient _investorClient;
+        private readonly IPublishEndpoint _publishEndpoint;
 
         public OpportunityController(
             IRepository<Opportunity, long, OpportunityDbContext> opportunityRepository,
-            IInvestorClient investorClient)
+            IInvestorClient investorClient,
+            IPublishEndpoint publishEndpoint)
         {
             _opportunityRepository = opportunityRepository;
             _investorClient = investorClient;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpGet]
@@ -40,9 +46,9 @@ namespace Safqah.Opportunities.Controllers
         {
             var opportunity = new Opportunity()
             {
-                Title= opportunityModel.Title,
-                Description= opportunityModel.Description,
-                TotalAmount= opportunityModel.TotalAmount,
+                Title = opportunityModel.Title,
+                Description = opportunityModel.Description,
+                TotalAmount = opportunityModel.TotalAmount,
                 InvestedAmount = 0,
                 CreatedAt = DateTime.Now,
                 CreatorId = _userId
@@ -60,8 +66,8 @@ namespace Safqah.Opportunities.Controllers
             if (balance <= 0) return BadRequest("Balance is less than 0");
 
             // TODO: Add to the queue of Investment
-                // Check if the oportunity is not completed and that the amount to invest + InvestedAmount is not larger than the TotalAmount
-                // if all is done deduct from the wallet the amount
+            await _publishEndpoint.Publish(new InvestSubmitted(_userId, investModel.OpportunityId, investModel.Amount));
+            
             return Ok();
         }
     }

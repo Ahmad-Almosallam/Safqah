@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Safqah.Wallet.Consumer.Consumers;
-using Safqah.Wallet.Data;
+using Safqah.Opportunities.Consumer.Consumers;
+using Safqah.Opportunities.Data;
+using Safqah.Shared.BaseRepository;
 
-namespace Safqah.Wallet.Consumer
+namespace Safqah.Opportunities.Consumer
 {
     public class Program
     {
@@ -19,22 +20,20 @@ namespace Safqah.Wallet.Consumer
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    
+                    services.AddDbContext<OpportunityDbContext>(options =>
+                    {
+                        options.UseNpgsql(hostContext.Configuration.GetConnectionString("Default"));
+                    });
+                    services.AddScoped(typeof(IRepository<,,>), typeof(Repository<,,>));
                     services.AddMassTransit(x =>
                     {
-                        x.AddConsumer<PaymentSucceedConsumer>();
-                        x.AddConsumer<InvestDoneConsumer>();
+                        x.AddConsumer<InvestSubmittedConsumer>();
 
                         x.UsingRabbitMq((context, cfg) =>
                         {
                             cfg.ConfigureEndpoints(context);
                         });
                     });
-                    services.AddDbContext<WalletDbContext>(options =>
-                    {
-                        options.UseNpgsql(hostContext.Configuration.GetConnectionString("Default"));
-                    });
-                    services.AddScoped(typeof(IWalletRepository), typeof(WalletRepository));
                     services.AddHostedService<Worker>();
                 });
     }

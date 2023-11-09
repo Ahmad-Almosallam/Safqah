@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Safqah.Payment", "services\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Safqah.Wallet.Consumer", "Safqah.Wallet.Consumer\Safqah.Wallet.Consumer.csproj", "{05A01642-86C2-4F89-AC4D-3C025556944C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Safqah.Opportunities.Consumer", "Safqah.Opportunities.Consumer\Safqah.Opportunities.Consumer.csproj", "{849EB1C1-0D8E-46EA-978C-A83D2C3670AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{05A01642-86C2-4F89-AC4D-3C025556944C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05A01642-86C2-4F89-AC4D-3C025556944C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05A01642-86C2-4F89-AC4D-3C025556944C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{849EB1C1-0D8E-46EA-978C-A83D2C3670AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{849EB1C1-0D8E-46EA-978C-A83D2C3670AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{849EB1C1-0D8E-46EA-978C-A83D2C3670AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{849EB1C1-0D8E-46EA-978C-A83D2C3670AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{AB738E50-A1A2-4981-AF60-A4F0C8AEFA30} = {E50AF122-A178-40B1-A783-A67DCD42F405}
 		{D4136597-BDB8-4F1E-AF3A-21C74168B73D} = {E50AF122-A178-40B1-A783-A67DCD42F405}
 		{05A01642-86C2-4F89-AC4D-3C025556944C} = {E50AF122-A178-40B1-A783-A67DCD42F405}
+		{849EB1C1-0D8E-46EA-978C-A83D2C3670AF} = {E50AF122-A178-40B1-A783-A67DCD42F405}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB4CE152-2E35-409B-9B67-23FBA43BDCD6}

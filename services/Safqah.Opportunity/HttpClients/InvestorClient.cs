@@ -23,7 +23,7 @@ namespace Safqah.Opportunities.HttpClients
         {
             _httpClient = httpClient;
             string token = httpContextAccessor.HttpContext.Request.Headers["Authorization"];
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Replace("Bearer", string.Empty));
             _httpClient.BaseAddress = new Uri(httpClientsSettings.Value.InvestorUrl);
             _logger = logger;
         }
