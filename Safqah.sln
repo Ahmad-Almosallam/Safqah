@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Safqah.Shared", "Safqah.Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Safqah.Investors", "services\Safqah.Investor\Safqah.Investors.csproj", "{406F5131-212A-4623-B78C-F937D844967C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Safqah.Opportunity", "services\Safqah.Opportunity\Safqah.Opportunity.csproj", "{AB738E50-A1A2-4981-AF60-A4F0C8AEFA30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Safqah.Opportunities", "services\Safqah.Opportunity\Safqah.Opportunities.csproj", "{AB738E50-A1A2-4981-AF60-A4F0C8AEFA30}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Safqah.Payment", "services\Safqah.Payment\Safqah.Payment.csproj", "{D4136597-BDB8-4F1E-AF3A-21C74168B73D}"
 EndProject

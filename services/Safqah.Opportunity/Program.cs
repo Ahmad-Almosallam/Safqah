@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Safqah.Opportunity
+namespace Safqah.Opportunities
 {
     public class Program
     {
