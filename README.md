@@ -27,7 +27,7 @@ This guide provides step-by-step instructions for setting up and running the Saf
 
    - Investors API:
      ```bash
-     cd services/Safqah.Investors
+     cd services/Safqah.Investor
      dotnet ef database update
      cd ../..
      ```
